@@ -18,8 +18,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
       for (let elem in json) {
         count += elem.id in cart ? 1 : 0;
-        new_product = new ProductItem(elem, (elem.id in cart));
-        product_list.append(new_product);
+        let new_product = new ProductItem(elem, (elem.id in cart));
+        // let new_product = document.createElement(ProductItem);
+        document.getElementById("product-list").appendChild(new_product);
       }
 
       document.getElementById("cart-count").setAttribute("innerText", count);
