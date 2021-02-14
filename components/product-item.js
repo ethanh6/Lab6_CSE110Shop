@@ -4,6 +4,7 @@ class ProductItem extends HTMLElement {
   // TODO
   constructor(product, isincart) {
     super();
+
     var shadow = this.attachShadow({mode: 'open'});
 
     let wrapper = document.createElement("li"); 
@@ -24,12 +25,30 @@ class ProductItem extends HTMLElement {
     let button = document.createElement("button");
     button.setAttribute("id", product.id);
     button.setAttribute("innerText", isincart ? "Remove from Cart" : "Add to Cart");
+    button.setAttribute("onclick", () => {
+
+      // toggle text
+      this.setAttribute("innerText", this.innerText == "Add to cart" ? "Remove from cart": "Add to cart");
+      if (this.innerText == "Add to cart") {
+        alert("Remove from cart");
+      }
+      else {
+        alert("Add to cart");
+      }
+
+      let delta = (this.innerText == "Add to cart" ? 1 : -1);
+      cart_cnt = document.getElementById("cart-count");
+      cart_cnt.innerText = parseInt(cart_cnt.innerText + delta);
+
+      
+
+
+    }
+    )
 
 
     let style = document.createElement('style');
     style.textContent = `
-    /* Custom Element CSS starts here */
-    
     .price {
       color: green;
       font-size: 1.8em;
@@ -96,13 +115,16 @@ class ProductItem extends HTMLElement {
     
     /* Custom Element CSS Ends Here */
     
-    `
+    ` ;
 
     wrapper.appendChild(image);
     wrapper.appendChild(title);
     wrapper.appendChild(price);
     wrapper.appendChild(button);
     wrapper.appendChild(style);
+
+    shadow.appendChild(style);
+    shadow.appendChild(wrapper);
 
   }
 }
